@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Time Status</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 设置状态列的颜色 */
+        .state-active {
+            color: #28a745;  /* Active 状态为绿色 */
+            font-weight: bold;
+        }
+
+        .state-pending {
+            color: #ffc107;  /* Pending 状态为黄色 */
+            font-weight: bold;
+        }
+
+        .state-close {
+            color: #dc3545;  /* Close 状态为红色 */
+            font-weight: bold;
+        }
+
+        /* 美化表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: #e0f7fa;  /* 鼠标悬停时改变背景色 */
+            text-decoration: underline;  /* 添加下划线效果 */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e0f7fa;
+        }
+
+        /* 美化按钮 */
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            font-size: 1rem;
+            padding: 1rem 1.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* 加载提示样式 */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        /* 搜索框和筛选器容器 */
+        .top-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-container, .filter-container {
+            display: inline-block;
+        }
+
+        .search-container input {
+            padding: 0.5rem;
+            width: 250px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        .filter-container select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        /* 响应式布局 */
+        @media screen and (max-width: 767px) {
+            table {
+                width: 100%;
+                font-size: 0.9rem;
+            }
+
+            .search-container input {
+                width: 200px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="section__title-center">Open Time Status</h1>
+
+        <!-- 搜索框和筛选器与返回按钮在同一行 -->
+        <div class="top-container">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by ID, Hours, Language" onkeyup="filterTable()">
+            </div>
+            <div class="filter-container">
+                <label for="stateFilter">Filter by State:</label>
+                <select id="stateFilter" onchange="filterTable()">
+                    <option value="">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="close">Close</option>
+                </select>
+            </div>
+            <a href="index.html" class="button back-button">Back to Home</a>
+        </div>
+
+        <!-- 加载提示 -->
+        <div class="loader" id="loader">Loading...</div>
+
+        <!-- 表格 -->
+        <table id="statusTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">ID <span class="sort-arrow">↑↓</span></th>
+                    <th onclick="sortTable(1)">Hours <span class="sort-arrow">↑↓</span></th>
+                    <th onclick="sortTable(2)">Language <span class="sort-arrow">↑↓</span></th>
+                    <th onclick="sortTable(3)">State <span class="sort-arrow">↑↓</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="opentime.js"></script>
+</body>
+</html>
